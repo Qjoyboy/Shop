@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS, DATE_INPUT_FORMATS
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'shop',
 ]
 
 MIDDLEWARE = [
@@ -75,10 +79,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        "USER": 'gon',
+        "NAME": 'Shop',
+        "HOST": 'localhost',
+        'PORT': 5432,
+        'PASSWORD':12345
+        },
     }
-}
+
 
 
 # Password validation
@@ -103,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -115,9 +124,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'shop/static/'
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static'
+# ]
+#
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = ''
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
