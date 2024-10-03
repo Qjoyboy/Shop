@@ -2,14 +2,15 @@
 
 {% block content %}
 <body>
-{% if objects_list %}
-    {% for object in objects_list %}
+{% if p_object_list %}
+    {% for object in p_object_list %}
         <div class="col-6">
             <div class="row">
-                <div class="col-2">
+                <div class="col-4">
                     <div class="card">
-                        {{ object.name }}
-                        <a href="{% url 'shop:product' object.pk %}" class="btn btn-primary">Перейти</a>
+                        <h4>{{ object.name }}</h4>
+                        {{ object.category }}
+                        <p>{{ object.price }} р</p>
                     </div>
                 </div>
             </div>
