@@ -1,23 +1,40 @@
 {% extends 'shop/base.html' %}
 
 {% block content %}
-<body>
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Shop</h1>
+            <p>
+                <a href="{% url 'shop:product_create' %}" class="btn btn-primary my-2">Добавить продукт</a>
+            </p>
+        </div>
+    </div>
+</section>
 {% if p_object_list %}
-    {% for object in p_object_list %}
-        <div class="col-6">
-            <div class="row">
-                <div class="col-4">
-                    <div class="card">
-                        <h4>{{ object.name }}</h4>
-                        {{ object.category }}
-                        <p>{{ object.price }} р</p>
-                    </div>
+{% for object in p_object_list %}
+<div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#55595c"/>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+        </svg>
+        <div class="card-body">
+            <h3>{{ object.name }} | {{ object.price }} руб</h3>
+            <p class="card-text">{{ object.category }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a href="{% url 'shop:product_detail' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                    <a href="{% url 'shop:product_update' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                    <a href="{% url 'shop:product_delete' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Удалить</a>
                 </div>
+                <small class="text-body-secondary">{{ object.pub_date }}</small>
             </div>
         </div>
-    {% endfor %}
+    </div>
+</div>
+{% endfor %}
 {% endif %}
 {% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
