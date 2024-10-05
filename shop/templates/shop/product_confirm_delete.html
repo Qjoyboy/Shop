@@ -1,0 +1,7 @@
+<h1>Вы действительно хотите удалить данный продукт?</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>Хотите удалить продукт? {{ object.name }}</p>
+    <button type="submit" class="btn">Подтвердить</button>
+    <a href="{% url 'shop:category' %}">Отмена</a>
+</form>

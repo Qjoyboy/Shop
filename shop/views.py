@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views import generic
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from unicodedata import category
 
 from shop.models import Category, Product
@@ -9,6 +11,11 @@ from shop.models import Category, Product
 class CategoryListView(generic.ListView):
     model = Category
     context_object_name = 'objects_list'
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['title'] = f'Shop - категории товаров'
+        return context_data
 
     def get_queryset(self):
         return Category.objects.filter()
@@ -26,5 +33,50 @@ class ProductListView(generic.ListView):
         context_data = super().get_context_data(*args, **kwargs)
         category_item = Category.objects.get(pk=self.kwargs.get('pk'))
         context_data['category_pk'] = category_item.pk
-        context_data['title'] = category_item.name
+        context_data['title'] = f'Shop - товары'
         return context_data
+
+    """Необходимо переопределить гет саксес урл, потому что реверсе лэйзи не работает"""
+
+
+'''CRUD без D для категорий продуктов'''
+#CreateView for Category
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ('name',)
+    success_url = reverse_lazy('shop:category')
+#UpdateView for Category
+class CategoryUpdateView(UpdateView):
+    model = Category
+    fields = ('name',)
+    success_url = reverse_lazy('shop:category')
+#DeleteView for Category
+class CategoryDeleteView(DeleteView):
+    model = Category
+    success_url = reverse_lazy('shop:category')
+
+"""CRUD для продуктов"""
+#CreateView for Product
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('name','price','category')
+    success_url = reverse_lazy('shop:products')
+
+
+#UpdateView for Product
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('name','price','category')
+    success_url = reverse_lazy('shop:products')
+
+
+#DetailView for Product
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'shop/product_detail.html'
+
+#DeleteView for Product
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('shop:products')
+
