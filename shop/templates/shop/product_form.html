@@ -1,14 +1,14 @@
-{% load static %}
-<div class="card">
-    <div class="row">
-        <div class="card-title">
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn">Создать</button>
-                </form>
-            </div>
+{% extends 'shop/base.html' %}
+{% block content %}
+<div class="col-6">
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Сoхранить</button>
+            </form>
         </div>
     </div>
 </div>
+{% endblock %}

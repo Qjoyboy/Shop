@@ -39,7 +39,8 @@ class ProductListView(generic.ListView):
     """Необходимо переопределить гет саксес урл, потому что реверсе лэйзи не работает"""
 
 
-'''CRUD без D для категорий продуктов'''
+'''CRUD без Detail для категорий'''
+
 #CreateView for Category
 class CategoryCreateView(CreateView):
     model = Category
@@ -55,20 +56,23 @@ class CategoryDeleteView(DeleteView):
     model = Category
     success_url = reverse_lazy('shop:category')
 
+
+#--------------------------------------------------
 """CRUD для продуктов"""
+
 #CreateView for Product
 class ProductCreateView(CreateView):
     model = Product
     fields = ('name','price','category')
     success_url = reverse_lazy('shop:products')
 
-
 #UpdateView for Product
 class ProductUpdateView(UpdateView):
     model = Product
     fields = ('name','price','category')
-    success_url = reverse_lazy('shop:products')
-
+    # success_url = reverse_lazy('shop:products')
+    def get_success_url(self):
+        return reverse('shop:products', args=[self.object.category.pk])
 
 #DetailView for Product
 class ProductDetailView(DetailView):
@@ -78,5 +82,6 @@ class ProductDetailView(DetailView):
 #DeleteView for Product
 class ProductDeleteView(DeleteView):
     model = Product
-    success_url = reverse_lazy('shop:products')
+    def get_success_url(self):
+        return reverse('shop:products', args=[self.object.category.pk])
 
