@@ -25,6 +25,7 @@ class Product(models.Model):
 
     image = models.ImageField(upload_to='media',blank=True, null=True)
 
+
     class Meta:
         verbose_name='Продукт'
         verbose_name_plural = 'Продукты'

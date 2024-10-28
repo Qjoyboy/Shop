@@ -1,3 +1,14 @@
-<h2>{{ object.name }}</h2>
-<h2>{{ object.price }}</h2>
-<h2>{{ object.pub_date }}</h2>
+{% load static %}
+{% block content %}
+<div class="card">
+    <div class="row">
+        <div class="card-title">
+            <div class="card-body">
+                <h2>{{ object.name }}</h2>
+                <h2>{{ object.price }}</h2>
+                <h2>{{ object.pub_date }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
