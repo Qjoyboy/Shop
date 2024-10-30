@@ -15,8 +15,8 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/', ProfileView.as_view(), name='profile'),
 
-    path('email-confirmation-sent/', EmailConfirmationSentView.as_view(), name='email_confirmation_sent'),
-    path('confirm-email/<str:uidb64>/<str:token>/', UserConfirmEmailView.as_view(), name='confirm_email'),
-    path('email-confirmed/', EmailConfirmedView.as_view(), name='email_confirmed'),
-    path('confirm-email-failed/', EmailConfirmationFailedView.as_view(), name='email_confirmation_failed'),
+    path('email_confirmation_sent/', EmailConfirmationSentView.as_view(), name='email_confirmation_sent'),
+    path('confirm_email/<str:uid>/<str:token>/', UserConfirmEmailView.as_view(), name='confirm_email'),
+    path('email_confirmed/', EmailConfirmedView.as_view(), name='email_confirmed'),
+    path('confirm_email_failed/', EmailConfirmationFailedView.as_view(), name='email_confirmation_failed'),
 ]
