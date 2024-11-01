@@ -1,8 +1,10 @@
 from email.message import EmailMessage
 from multiprocessing.dummy import current_process
+from random import randint
 
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import PasswordResetView
 from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -99,5 +101,4 @@ class EmailConfirmationFailedView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Ваш электронный адрес не активирован"
         return context
-
 
