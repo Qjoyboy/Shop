@@ -3,6 +3,7 @@ from multiprocessing.dummy import current_process
 from random import randint
 
 from django.contrib.auth import login, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.sites.models import Site
@@ -26,7 +27,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin,UpdateView):
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
