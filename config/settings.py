@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -82,11 +84,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        "USER": 'gon',
-        "NAME": 'Shop',
+        "USER": os.getenv("DATABASE_USER"),
+        "NAME": os.getenv("DATABASE_NAME"),
         "HOST": 'localhost',
         'PORT': 5432,
-        'PASSWORD':12345
+        'PASSWORD':os.getenv("DATABASE_PASSWORD")
         },
     }
 
@@ -145,7 +147,7 @@ DATE_INPUT_FORMATS = ['%d-%m-%Y']
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL ='/'
 LOGOUT_REDIRECT_URL ='/'
-
+LOGIN_URL='/users/'
 
 #========================================================
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -153,9 +155,18 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
-EMAIL_HOST_USER = 'joyb0y7@yandex.ru'
-EMAIL_HOST_PASSWORD = 'xxmfwamvxdcrhgkb'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
 
+CACHE_ENABLED = os.getenv('CACHE_ENABLED') == 'True'
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
+        }
+    }
